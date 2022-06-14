@@ -104,10 +104,85 @@
 
 \tableofcontents{}
 
+\chapter{Przygotowanie}
+\label{Przygotowanie}
+
+W pierwszej kolejności po zalogowaniu się i przejściu do katalogu \emph{/usr/src} musimy zdobyć link do paczki z plikami źródłowymi kernela. Z racji tego, że
+korzystam z wirtualnej maszyny bez interfejsu graficznego posłużę się komputerem, który hostuje maszynę wirtualną. Wchodzimy na stronę i przy użyciu menu
+kontekstowego kopiujemy do schowka bezpośredni link to pliku(rys. \ref{link-copy}).
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{01-link-copy.png}
+	\caption{Kopiowanie linku}
+	\label{link-copy}
+\end{figure}
+
+Do pobrania pliku jedynym słusznym wyborem będzie komenda \emph{wget}(rys. \ref{wget}).
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{02-wget}
+	\caption{Pobieranie kernela}
+	\label{wget}
+\end{figure}
+
+Jako, że pobrany plik jest to plik archiwum używamy na nim komendy \emph{tar -xvpf}(rys \ref{tar}).
+
+Dla przypomnienia (flagi polecenia \emph{tar}):
+\begin{itemize}
+	\item x – wyodrębnia wymienione pliki
+	\item v – wypisuje nazwy wszystkich plików
+	\item f – określa nazwę pliku archiwum tar
+	\item p - zachowuje ustawienia dostępu do plików
+\end{itemize}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{03-tar}
+	\caption{Rozpakowywanie archiwum}
+	\label{tar}
+\end{figure}
+
+Jak można zauważyć został stworzony nowy folder zawierający pliki z archiwum.
+
+Teraz musimy przekopiować \emph{config} znajdujący się w katalogu \emph{/proc} (rys \ref{config}). Ponieważ plik konfiguracji ma rozszerzenie wskazujące na to, że to archiwum gzip używamy polecenia \emph{zcat}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{04-config}
+	\caption{Kopiowanie konfiguracji}
+	\label{config}
+\end{figure}
+
+Przyda się zrobić kopię zapasową oryginalnego configu. W tym celu kopiujemy plik \emph{.config} do przykładowo pliku \emph{.config.bak} (rys. \ref{config-bak}).
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{05-config-bak}
+	\caption{Kopia zapasowa}
+	\label{config-bak}
+\end{figure}
+
 \chapter{Metoda stara}
 \label{Metoda stara}
 
+Przyszła pora na wywołanie polecenia \emph{make localmodconfig}. Po pomyślnym wykonaniu jesteśmy informowani o nadpisaniu konfiguracji do pliku \emph{.config} (rys. \ref{old-config}).
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{06-old-config}
+	\caption{Wynik polecenia \emph{make localmodconfig}}
+	\label{old-config}
+\end{figure}
+
+Nastała wielka chwila - kompilacja jądra. W tym celu trzeba znowu użyć polecenia \emph{make}. Tym razem użyjemy parametru \emph{-j<liczba>} co pozwoli nam uruchomić kompilację kernela na wielu rdzeniach(lub wątkach?). W moim przypadku użyję liczby 8. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{08-bzimage}
+	\caption{Kompilowanie kernela}
+	\label{bzimage}
+\end{figure}
 
 \chapter{Metoda nowa}
 \label{Metoda nowa}
