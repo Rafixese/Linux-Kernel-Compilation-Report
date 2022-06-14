@@ -213,7 +213,101 @@ Budowanie modułów zakończyło się zaskakująco szybko - w niecałe 36 sekund
 	\label{modules-comp}
 \end{figure}
 
+\pagebreak
 
+Instalacja modułów nie wprowadza nic nowego. Instalujemy moduły przy użyciu \emph{make}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{12-modules-install}
+	\caption{Instalowanie modułów}
+	\label{modules-install}
+\end{figure}
+
+Bardzo szybkie 3 sekundy później (znowu mierzyłem) proces jest zakończony.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{13-modules-install-res}
+	\caption{Instalowanie modułów - wynik}
+	\label{modules-install-res}
+\end{figure}
+
+Możemy teraz przystąpić do kopiowania kernela do katalogu \emph{/boot}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{14-bzimage-copy}
+	\caption{Kopiowanie bzImage do katalogu /boot}
+\end{figure}
+
+\pagebreak
+
+Plik jądra został z sukcesem przekopiowany do katalogu \emph{/boot}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{15-boot}
+	\caption{Kopiowanie bzImage do katalogu /boot - wynik}
+\end{figure}
+
+Musimy jeszcze przekopiować konfigurację i mapę systemu.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{16-config-copy}
+	\caption{Kopiowanie configu i mapy symboli do katalogu /boot}
+\end{figure}
+
+Teraz możemy usunąć oryginalny plik \emph{System.map} i podłączyć skopiowany korzystając z linku symbolicznego.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{17-system-map-link}
+	\caption{Utworzenie linku symbolicznego do skopiowanej mapy symboli.}
+\end{figure}
+
+\pagebreak
+
+Generujemy dysk startowy. Do wygenerowania polecenia używamy skryptu \emph{/usr/share/mkinitrd/mkinitrd\_command\_generator.sh}. Następnie wykonujemy wygenerowane polecenie.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{23-ram-v2}
+	\caption{Generujemy dysk ram}
+\end{figure}
+
+Pozostała nam już tylko konfiguracja lilo.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{19-lilo-conf}
+	\caption{Konfiguracja lilo}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{24-lilo}
+	\caption{Aktualizacja lilo}
+\end{figure}
+
+\pagebreak
+
+Po uruchomieniu systemu widzimy nową pozycję "Old Method".
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{25-lilo-view}
+	\caption{Widok Lilo po uruchomieniu maszyny wirtualnej}
+\end{figure}
+
+Po chwili system się uruchamia i po zalogowaniu widzimy, że zmieniła się wersja jądra systemu.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{26-success}
+	\caption{Logowanie na root'a na nowym kernelu}
+\end{figure}
 
 \chapter{Metoda nowa}
 \label{Metoda nowa}
