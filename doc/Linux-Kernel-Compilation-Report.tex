@@ -175,7 +175,7 @@ Przyszła pora na wywołanie polecenia \emph{make localmodconfig}. Po pomyślnym
 	\label{old-config}
 \end{figure}
 
-Nastała wielka chwila - kompilacja jądra. W tym celu trzeba znowu użyć polecenia \emph{make}. Tym razem użyjemy parametru \emph{-j<liczba>} co pozwoli nam uruchomić kompilację kernela na wielu rdzeniach(lub wątkach?). W moim przypadku użyję liczby 8. 
+Nastała wielka chwila - kompilacja jądra. W tym celu trzeba znowu użyć polecenia \emph{make}. Tym razem użyjemy parametru \emph{-j$<liczba>$} co pozwoli nam uruchomić kompilację kernela na wielu rdzeniach(lub wątkach?). W moim przypadku użyję liczby 8. 
 
 \begin{figure}[h]
 	\centering
@@ -183,6 +183,37 @@ Nastała wielka chwila - kompilacja jądra. W tym celu trzeba znowu użyć polec
 	\caption{Kompilowanie kernela}
 	\label{bzimage}
 \end{figure}
+
+\pagebreak
+
+Kompilacja kernela przebiegła w zawrotnym czasie 4 minut i 45 sekund (mniej więcej).
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{09-compilation}
+	\caption{Kompilowanie kernela - wynik}
+	\label{compilation}
+\end{figure}
+
+Kompilację modułów zleca się również komendą make, ale zamieniamy parametr pozycyjny \emph{bzImage} na \emph{modules}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{10-modules}
+	\caption{Kompilowanie modułów}
+	\label{modules}
+\end{figure}
+
+Budowanie modułów zakończyło się zaskakująco szybko - w niecałe 36 sekund (tak, stałem ze stoperem w ręce). Pytanie czy tak powinno być? Czy to może zasługa Intel Core i9? Podejrzewam, że "stara metoda" ograniczyła ilość modułów do niezbędnego minimum. Przyjmijmy więc, że wszystko jest w porządku i kontynuujmy.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{11-modules-comp}
+	\caption{Kompilowanie modułów - wynik}
+	\label{modules-comp}
+\end{figure}
+
+
 
 \chapter{Metoda nowa}
 \label{Metoda nowa}
