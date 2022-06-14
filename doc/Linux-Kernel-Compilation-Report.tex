@@ -301,7 +301,7 @@ Po uruchomieniu systemu widzimy nową pozycję "Old Method".
 	\caption{Widok Lilo po uruchomieniu maszyny wirtualnej}
 \end{figure}
 
-Po chwili system się uruchamia i po zalogowaniu widzimy, że zmieniła się wersja jądra systemu.
+Po chwili system się uruchamia i po zalogowaniu(lub nawet przed zalogowaniem) widzimy, że zmieniła się wersja jądra systemu.
 
 \begin{figure}[h]
 	\centering
@@ -309,21 +309,132 @@ Po chwili system się uruchamia i po zalogowaniu widzimy, że zmieniła się wer
 	\caption{Logowanie na root'a na nowym kernelu}
 \end{figure}
 
+Słowami zakończenia - nie obyło się bez błędów. Generując dysk ram za pierwszym razem przypadkowo nadpisałem oryginalny plik initrd.gz. Udało mi się sytuację prawdopodobnie uratować przekopiowując plik initrd.gz z poprzedniego snapshota, który utworzyłem, na maszynę, na której znajduje się Virtual Box, a następnie z powrotem na aktualną wersję systemu. Pomimo starań przy próbie odpalenia nowego kernela ten po długim czasie bootowania zaczął sypać błędami. Możliwe też, że to przez to, że przy tworzeniu dysku ram zapomniałem o dodaniu \emph{.gz} na końcu (lilo skonfigurowało się poprawnie i po uruchomieniu była widoczna nowa pozycja). Zauważyłem to już po fakcie. Stwierdziłem, że spróbuję jeszcze raz zaczynając od momentu kompilowania jądra. Za drugim razem poszło gładko i system wystartował. Nie umieszczam jeszcze raz zrzutów ekranu, gdzie treść w pierwszym i drugim podejściu była identyczna, żeby się nie powtarzać. 
+
 \chapter{Metoda nowa}
 \label{Metoda nowa}
+
+Pracę nad nową metodą zaczynamy od przygotowania plików źródłowych i skopiowania configu. Teraz możemy stworzyć konfigurację systemu nową metodą.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{28-config}
+	\caption{Utworzenie configu nową metodą}
+\end{figure}
+
+Tak utworzony config-strip przekopiowujemy do .config i wywołujemy \emph{make oldconfig} zgodnie z instrukcją w skrypcie z poprzedniego zdjęcia.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{29-config}
+	\caption{Zmiana configu}
+\end{figure}
+
+\pagebreak
+
+Teraz trzeba klikać Enter (i to dużo razy). W końcu gra w nie-czytanie-i-klikanie-enter się kończy i musimy przejść do następnego kroku.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{30-config}
+	\caption{Maraton klikania Enter}
+\end{figure}
+
+Kompilujemy jądro.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{31-comp}
+	\caption{Kompilacja jądra}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{32-comp}
+	\caption{Kompilacja jądra - wynik}
+\end{figure}
+
+\pagebreak
+
+Przechodzimy do kompilacji modułów.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{33-comp}
+	\caption{Kompilacja modułów - wynik}
+\end{figure}
+
+A następnie do instalacji modułów.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{34-install}
+	\caption{Instalacja modułów - wynik}
+\end{figure}
+
+Kopiujemy niezbędne pliki.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{35-copy}
+	\caption{Kopiowanie plików}
+\end{figure}
+
+\pagebreak
+
+Tworzymy link symboliczny do System.map.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{36-sysmap}
+	\caption{Utworzenie linku symbolicznego}
+\end{figure}
+
+Tworzymy dysk ram.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{37-ram}
+	\caption{Stworzenie dysku ram}
+\end{figure}
+
+Konfigurujemy lilo.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{38-lilo}
+	\caption{/etc/lilo.conf}
+\end{figure}
+
+\pagebreak
+
+I ponownie aktualizujemy
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{39-lilo}
+	\caption{Wynik komendy lilo}
+\end{figure}
+
+Po ponownym uruchomieniu maszyny mamy kolejną pozycję do wyboru.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{40-lilo}
+	\caption{Wynik komendy lilo}
+\end{figure}
+
+Widzimy, że zmieniła się wersja jądra.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{41-root}
+	\caption{Logowanie na root'a}
+\end{figure}
 
 \chapter{Wnioski}
 \label{Wnioski}
 
-%\begin{figure}[h]
-%	\centering
-%	\includegraphics[scale=0.4]{conv.png}
-%	\caption{Warstwa konwolucyjna - zasada działania\cite{developpapercom_2021}}
-%	\label{conv_img}
-%\end{figure}
-
-%\begin{lstlisting}[language=Bash, caption={}, label={}]
-
-%\end{lstlisting}
+Jak można się przekonać wykonując ćwiczenie - kompilacja kernela nie jest trudna, a jest nawet przyjemna. Przede wszystkim trzeba uważać na błędy ludzkie, takie jak złe nazwanie pliku i wykasowanie lub nadpisanie czegoś przez przypadek. Zdarza się. Oczywiście lekcja jest taka, że backupów nigdy za wiele. 
 
 \end{document}
